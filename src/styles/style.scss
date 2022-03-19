@@ -1,0 +1,40 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.generic-button {
+  display: flex;
+  gap: 3px;
+  color: white;
+  border-radius: 2px;
+  padding: 5px;
+  align-items: center;
+  border: solid 1px transparent;
+}
+
+.generic-button:hover {
+  cursor: pointer;
+  border: solid 1px white;
+}
+
+.header {
+  width: 100vw;
+  background-color: rgb(105, 105, 105);
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__navigation {
+    display: flex;
+    position: relative;
+
+    &__dropdown {
+      position: absolute;
+      top: 40px;
+      border: solid 1px red;
+    }
+  }
+}

@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Header from "./components/Header";
+import { UserContext } from "./context/User";
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Cart from "./pages/Cart";
+import LoginRegister from "./pages/LoginRegister";
 
 function App() {
+  const [user, setUser] = useState({ username: "test" });
+  const logout = () => setUser(null);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContext.Provider value={{ user, logout }}>
+      <div className="App">
+        <Header />
+        <Routes>
+          <Route path={"/"} element={<Home />} />
+          <Route path={"/cart"} element={<Cart />} />
+          <Route path={"/login-register"} element={<LoginRegister />} />
+        </Routes>
+      </div>
+    </UserContext.Provider>
   );
 }
 
