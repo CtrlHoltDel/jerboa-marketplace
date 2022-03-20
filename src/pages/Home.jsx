@@ -22,11 +22,12 @@ const Home = ({ amendCart, cart }) => {
   return (
     <div className="product-list">
       {products.map((product) => {
+        const item = cart.find((prod) => prod._id === product._id);
         return (
           <ItemPlaceholder
             product={product}
             amendCart={amendCart}
-            cart={cart}
+            item={item}
           />
         );
       })}

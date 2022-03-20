@@ -22,6 +22,8 @@ const LoginRegister = ({ user, login }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const [emailError, setEmailError] = useState(false);
+
   const toggleLoginType = () => {
     setType(type === "login" ? "register" : "login");
     setMessage("");
@@ -35,6 +37,7 @@ const LoginRegister = ({ user, login }) => {
     e.preventDefault();
 
     setError("");
+    setEmailError(false);
 
     if (type === "login") {
       //Login
@@ -59,6 +62,20 @@ const LoginRegister = ({ user, login }) => {
       //Register
       if (!name || !password || !confirmPassword || !email) {
         setError("Missing credentials");
+        return;
+      }
+
+      const emailRegex =
+        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+      if (!emailRegex.test(email)) {
+        setEmailError(true);
+        setError("Invalid Email Format");
+        return;
+      }
+
+      if (password.length < 6) {
+        setError("Password Too Short");
         return;
       }
 
@@ -107,6 +124,7 @@ const LoginRegister = ({ user, login }) => {
             type="text"
             id="login-email"
             value={email}
+            style={{ border: emailError ? "red solid 1px" : "black solid 1px" }}
             onChange={(e) => {
               setEmail(e.target.value);
             }}

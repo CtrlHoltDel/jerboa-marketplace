@@ -34,6 +34,13 @@ const Cart = ({ cart, amendCart }) => {
           cart.reduce((total, item) => total + item.price * item.count, 0)
         )}
       </div>
+      <button
+        onClick={() => {
+          amendCart("empty");
+        }}
+      >
+        Clear Cart
+      </button>
     </div>
   );
 };

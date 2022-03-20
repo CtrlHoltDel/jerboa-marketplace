@@ -24,6 +24,11 @@ const useUser = () => {
   };
 
   const amendCart = (product, operation) => {
+    if (product === "empty") {
+      setCart([]);
+      return;
+    }
+
     let updatedCart;
     if (operation === "incriment") {
       //Add item
