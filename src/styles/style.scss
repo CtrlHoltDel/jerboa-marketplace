@@ -38,3 +38,91 @@
     }
   }
 }
+
+.login-page {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 500px;
+  position: relative;
+
+  &__message {
+    position: absolute;
+    bottom: 50px;
+    border: solid 1px rgb(148, 148, 148);
+    color: rgb(63, 62, 62);
+    padding: 5px 15px;
+    border-radius: 5px;
+  }
+
+  &__form-container {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    padding: 20px 25px;
+    margin-top: 20px;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    border: solid gray 1px;
+
+    &__icon {
+      position: absolute;
+      height: 35px;
+      width: 35px;
+      bottom: 5px;
+      left: 5px;
+    }
+
+    &__error {
+      position: absolute;
+      font-size: 0.9rem;
+      color: red;
+      top: -25px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      input {
+        margin-bottom: 5px;
+      }
+
+      button {
+        margin-top: 5px;
+        padding: 5px;
+        margin: 5px 35px;
+      }
+
+      button:hover {
+        cursor: pointer;
+      }
+    }
+
+    &__toggle {
+      display: flex;
+      justify-content: flex-end;
+      font-size: 0.8rem;
+      text-decoration: underline;
+      align-self: flex-end;
+    }
+
+    &__toggle:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.product-list {
+  display: flex;
+
+  &__item {
+    img {
+      height: 150px;
+      width: 150px;
+      object-fit: cover;
+    }
+  }
+}

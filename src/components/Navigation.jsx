@@ -4,7 +4,7 @@ import Button from "./Button";
 import { Link } from "react-router-dom";
 
 const Navigation = () => {
-  const { user, logout } = useContext(UserContext);
+  const { user, logout, cart } = useContext(UserContext);
 
   return (
     <div className="header__navigation">
@@ -12,16 +12,21 @@ const Navigation = () => {
         <Button
           style={{ textDecoration: "none" }}
           text="logout"
-          click={logout}
+          click={() => logout(null)}
           type="logout"
         />
       ) : (
         <Link style={{ textDecoration: "none" }} to="login-register">
-          <Button text="login" type="login" />
+          <Button text="Login/Register" type="login" />
         </Link>
       )}
       <Link style={{ textDecoration: "none" }} to="cart">
-        <Button text="cart" type="cart" />
+        <Button
+          text={`cart ${cart.reduce((total, item) => {
+            return total + item.count;
+          }, 0)}`}
+          type="cart"
+        />
       </Link>
     </div>
   );
