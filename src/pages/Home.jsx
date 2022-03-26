@@ -2,11 +2,16 @@ import React, { useEffect, useState } from "react";
 import api from "../actions/api";
 import ItemPlaceholder from "../components/ItemPlaceholder";
 
-const Home = ({ amendCart, cart }) => {
+import { useNavigate } from "react-router-dom";
+
+const Home = ({ amendCart, cart, user }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
+    //On initial page load get products
     const getProducts = async () => {
       setLoading(true);
       const fetchedProducts = await api.getProducts();
@@ -14,8 +19,15 @@ const Home = ({ amendCart, cart }) => {
       setLoading(false);
     };
 
-    getProducts();
-  }, []);
+    //Check if the account is a business account and redirect if so.
+    if (user?.userInfo.business) {
+      navigate(`/business/${user?.userInfo.id}`);
+    } else {
+      getProducts();
+    }
+
+    return getProducts;
+  }, [user, navigate]);
 
   if (loading) return <div>Loading..</div>;
 
@@ -28,6 +40,7 @@ const Home = ({ amendCart, cart }) => {
             product={product}
             amendCart={amendCart}
             item={item}
+            key={product._id}
           />
         );
       })}

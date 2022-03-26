@@ -107,6 +107,16 @@
       font-size: 0.8rem;
       text-decoration: underline;
       align-self: flex-end;
+      flex-direction: column;
+      gap: 4px;
+      text-align: right;
+
+      &__business {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 5px;
+      }
     }
 
     &__toggle:hover {

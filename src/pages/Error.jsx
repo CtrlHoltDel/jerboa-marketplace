@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Error = () => {
-  return <div>Error</div>;
+  const { error } = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!error) navigate("/");
+  }, [error, navigate]);
+
+  return <div>{error}</div>;
 };
 
 export default Error;

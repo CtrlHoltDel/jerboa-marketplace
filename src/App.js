@@ -7,6 +7,8 @@ import { UserContext } from "./context/User";
 import { Routes, Route } from "react-router-dom";
 import useUser from "./hooks/useUser";
 import Error from "./pages/Error";
+import Business from "./pages/Business";
+import Error404 from "./pages/Error404";
 
 function App() {
   const { user, cart, logout, login, amendCart } = useUser();
@@ -18,7 +20,7 @@ function App() {
         <Routes>
           <Route
             path={"/"}
-            element={<Home amendCart={amendCart} cart={cart} />}
+            element={<Home amendCart={amendCart} cart={cart} user={user} />}
           />
           <Route
             path={"/cart"}
@@ -28,7 +30,12 @@ function App() {
             path={"/login-register"}
             element={<LoginRegister login={login} user={user} />}
           />
+          <Route
+            path={`/business/:businessId`}
+            element={<Business user={user} />}
+          />
           <Route path={"/error"} element={<Error />} />
+          <Route path={"/*"} element={<Error404 />} />
         </Routes>
       </div>
     </UserContext.Provider>

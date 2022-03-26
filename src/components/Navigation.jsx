@@ -20,14 +20,18 @@ const Navigation = () => {
           <Button text="Login/Register" type="login" />
         </Link>
       )}
-      <Link style={{ textDecoration: "none" }} to="cart">
-        <Button
-          text={`cart ${cart.reduce((total, item) => {
-            return total + item.count;
-          }, 0)}`}
-          type="cart"
-        />
-      </Link>
+      {user?.userInfo.business ? (
+        <div>{user.userInfo.name}</div>
+      ) : (
+        <Link style={{ textDecoration: "none" }} to="cart">
+          <Button
+            text={`cart ${cart.reduce((total, item) => {
+              return total + item.count;
+            }, 0)}`}
+            type="cart"
+          />
+        </Link>
+      )}
     </div>
   );
 };

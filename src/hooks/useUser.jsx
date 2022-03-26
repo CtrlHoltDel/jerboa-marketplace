@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import ls from "../utils/localStorage";
+import { useNavigate } from "react-router-dom";
 
 const useUser = () => {
   const [user, setUser] = useState(null);
   const [cart, setCart] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchedUser = ls.getUser();
@@ -21,6 +24,7 @@ const useUser = () => {
   const logout = () => {
     ls.setUser(null);
     setUser(null);
+    navigate("/");
   };
 
   const amendCart = (product, operation) => {

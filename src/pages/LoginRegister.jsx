@@ -21,6 +21,7 @@ const LoginRegister = ({ user, login }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isBusiness, setIsBusiness] = useState(false);
 
   const [emailError, setEmailError] = useState(false);
 
@@ -47,8 +48,10 @@ const LoginRegister = ({ user, login }) => {
       }
 
       setLoading(true);
-      const body = await api.login(email, password);
+      const body = await api.login(email, password, isBusiness);
       setLoading(false);
+
+      console.log(body.data);
 
       if (body.error) {
         setError(
@@ -56,8 +59,11 @@ const LoginRegister = ({ user, login }) => {
         );
         return;
       }
+
       setMessage("Authentication succesful - redirecting...");
       login(body.data);
+
+      navigate(isBusiness ? "/business" : "/'home");
     } else {
       //Register
       if (!name || !password || !confirmPassword || !email) {
@@ -65,8 +71,10 @@ const LoginRegister = ({ user, login }) => {
         return;
       }
 
-      const emailRegex =
-        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+      const emailRegex = new RegExp(
+        '^(([^<>()[\\].,;:s@"]+(.[^<>()[\\].,;:s@"]+)*)|(".+"))@(([^<>()[\\].,;:s@"]+.)+[^<>()[\\].,;:s@"]{2,})$',
+        "i"
+      );
 
       if (!emailRegex.test(email)) {
         setEmailError(true);
@@ -85,7 +93,7 @@ const LoginRegister = ({ user, login }) => {
       }
 
       setLoading(true);
-      const body = await api.register(email, name, password);
+      const body = await api.register(email, name, password, isBusiness);
       setLoading(false);
 
       if (body?.error) {
@@ -108,7 +116,9 @@ const LoginRegister = ({ user, login }) => {
         <form action="" onSubmit={onSubmit}>
           {type === "register" && (
             <>
-              <label htmlFor="login-name">Name</label>
+              <label htmlFor="login-name">
+                {isBusiness ? "Business Name" : "Name"}
+              </label>
               <input
                 type="text"
                 id="login-name"
@@ -159,9 +169,25 @@ const LoginRegister = ({ user, login }) => {
               ? "Need an account? Register"
               : "Already have an account? Login"}
           </p>
+          <div className="login-page__form-container__toggle__business">
+            <label htmlFor="business-checkbox">Are you a business?</label>
+            <input
+              id="business-checkbox"
+              type="checkbox"
+              value={isBusiness}
+              onClick={(e) => {
+                console.log(e.target.checked);
+                setIsBusiness(e.target.checked);
+              }}
+            />
+          </div>
         </div>
         {loading && (
-          <img className="login-page__form-container__icon" src={loadingIcon} />
+          <img
+            className="login-page__form-container__icon"
+            alt="icon"
+            src={loadingIcon}
+          />
         )}
       </div>
       {message && <div className="login-page__message">{message}</div>}

@@ -8,7 +8,7 @@ const ItemPlaceholder = ({ product, amendCart, item }) => {
   return (
     <div className="product-list__item" key={product._id}>
       <div>{product.name}</div>
-      <img src={product.image_url} alt="" srcset="" />
+      <img src={product.image_url} alt="" srcSet="" />
       <div>Price: {formatPrice(product.price)}</div>
       <div>Sold By: {product.sold_by}</div>
       <div>Brand: {product.brand}</div>
