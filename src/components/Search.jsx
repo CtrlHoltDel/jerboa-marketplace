@@ -5,11 +5,9 @@ const Search = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(currSearch);
   };
 
   const onChange = (e) => {
-    console.log(e.target.value);
     setCurrSearch(e.target.value);
   };
 

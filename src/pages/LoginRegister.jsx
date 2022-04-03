@@ -51,8 +51,6 @@ const LoginRegister = ({ user, login }) => {
       const body = await api.login(email, password, isBusiness);
       setLoading(false);
 
-      console.log(body.data);
-
       if (body.error) {
         setError(
           body.error.response ? "Invalid credentials." : "Server error."
@@ -63,7 +61,7 @@ const LoginRegister = ({ user, login }) => {
       setMessage("Authentication succesful - redirecting...");
       login(body.data);
 
-      navigate(isBusiness ? "/business" : "/'home");
+      if (isBusiness) navigate("/business");
     } else {
       //Register
       if (!name || !password || !confirmPassword || !email) {
@@ -176,7 +174,6 @@ const LoginRegister = ({ user, login }) => {
               type="checkbox"
               value={isBusiness}
               onClick={(e) => {
-                console.log(e.target.checked);
                 setIsBusiness(e.target.checked);
               }}
             />

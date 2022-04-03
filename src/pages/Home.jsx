@@ -26,7 +26,7 @@ const Home = ({ amendCart, cart, user }) => {
       getProducts();
     }
 
-    return getProducts;
+    return getProducts();
   }, [user, navigate]);
 
   if (loading) return <div>Loading..</div>;
@@ -34,12 +34,10 @@ const Home = ({ amendCart, cart, user }) => {
   return (
     <div className="product-list">
       {products.map((product) => {
-        const item = cart.find((prod) => prod._id === product._id);
         return (
           <ItemPlaceholder
             product={product}
             amendCart={amendCart}
-            item={item}
             key={product._id}
           />
         );

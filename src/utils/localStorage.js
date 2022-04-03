@@ -17,7 +17,7 @@ ls.getCart = () => {
   return JSON.parse(user);
 };
 
-ls.updateCart = (cart) => {
+ls.setCart = (cart = []) => {
   localStorage.setItem(CART, JSON.stringify(cart));
 };
 

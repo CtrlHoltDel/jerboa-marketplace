@@ -9,9 +9,20 @@ import useUser from "./hooks/useUser";
 import Error from "./pages/Error";
 import Business from "./pages/Business";
 import Error404 from "./pages/Error404";
+import useServerStatus from "./hooks/useServerStatus";
+import { useState } from "react";
+import Product from "./pages/Product";
+import Company from "./pages/Company";
 
 function App() {
-  const { user, cart, logout, login, amendCart } = useUser();
+  const [serverError, setServerError] = useState(false);
+
+  const { loading } = useServerStatus(setServerError);
+  const { user, cart, logout, login, amendCart, loadingCart } =
+    useUser(setServerError);
+
+  if (loading || loadingCart) return <div>Loading</div>;
+  if (serverError) return <div>{serverError.error}</div>;
 
   return (
     <UserContext.Provider value={{ user, logout, cart }}>
@@ -34,6 +45,8 @@ function App() {
             path={`/business/:businessId`}
             element={<Business user={user} />}
           />
+          <Route path={"/company/:businessId"} element={<Company />} />
+          <Route path={`/product/:productId`} element={<Product />} />
           <Route path={"/error"} element={<Error />} />
           <Route path={"/*"} element={<Error404 />} />
         </Routes>

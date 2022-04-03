@@ -4,6 +4,14 @@ const instance = axios.create({ baseURL: process.env.REACT_APP_TLD });
 
 const api = {};
 
+api.pingServer = async () => {
+  try {
+    await instance.get("/products");
+  } catch (error) {
+    return { error };
+  }
+};
+
 api.register = async (email, name, password, business) => {
   try {
     await instance.post("/register", { email, name, password, business });
@@ -34,6 +42,15 @@ api.getProducts = async () => {
   }
 };
 
+api.getProduct = async (id) => {
+  try {
+    const { data } = await instance.get(`/product/${id}`);
+    return data.product;
+  } catch (error) {
+    return { error };
+  }
+};
+
 api.validateBusiness = async ({ token, id }) => {
   try {
     await instance.get(`/business/validate/${id}`, {
@@ -41,6 +58,33 @@ api.validateBusiness = async ({ token, id }) => {
     });
   } catch (error) {
     return { error };
+  }
+};
+
+api.amendCart = async (token, id, amount) => {
+  try {
+    await instance.post(
+      `/customer/cart`,
+      {
+        id,
+        amount,
+      },
+      { headers: { authorisation: `Bearer ${token}` } }
+    );
+  } catch (error) {
+    return { error };
+  }
+};
+
+api.getCart = async (token) => {
+  try {
+    const { data } = await instance.get("/customer/cart", {
+      headers: { authorisation: `Bearer ${token}` },
+    });
+
+    return { cart: data.cart.cart };
+  } catch (error) {
+    return { error: "Error getting cart" };
   }
 };
 
